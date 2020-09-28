@@ -1,0 +1,57 @@
+{
+  "name": "make-pdf",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "main": "dist/index.js",
+  "author": {
+    "name": "Pacharapol Withayasakpunt",
+    "email": "polv@polv.cc",
+    "url": "https://www.polv.cc"
+  },
+  "scripts": {
+    "start": "webpack-dev-server",
+    "dev": "webpack-dev-server"
+  },
+  "dependencies": {
+    "@types/pdfmake": "^0.1.15",
+    "@types/webpack": "^4.41.22",
+    "globby": "^11.0.1",
+    "js-yaml": "^3.14.0",
+    "mime-types": "^2.1.27",
+    "node-fetch": "^2.6.1",
+    "pdfmake": "^0.1.68",
+    "ts-loader": "^8.0.4",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "zod": "^1.11.9"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.10.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "import-sort-parser-typescript": "^6.0.0",
+    "typescript": "^4.0.3"
+  },
+  "engines": {
+    "node": "12.x",
+    "npm": "please-use-pnpm",
+    "pnpm": "5.x",
+    "yarn": "please-use-pnpm"
+  },
+  "engineStrict": true,
+  "importSort": {
+    ".js, .jsx, .ts, .tsx, .vue": {
+      "parser": "typescript",
+      "style": "module"
+    }
+  }
+}
