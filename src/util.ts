@@ -21,7 +21,7 @@ export function hash (str: string, seed?: number): string {
   return (hval >>> 0).toString(36)
 }
 
-export function deepMerge<T, U> (dst: T, src: U): T {
+export function deepMerge<T = unknown, U = unknown> (dst: T, src: U): T {
   if (is<Record<string, unknown>>(dst, {}) && is<Record<string, unknown>>(src, {})) {
     return Object.keys({ ...src, ...dst }).reduce((prev, k) => ({
       ...prev,

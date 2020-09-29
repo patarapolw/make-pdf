@@ -27,6 +27,7 @@
     "@types/puppeteer": "^3.0.2",
     "@types/ws": "^7.2.6",
     "express": "^4.17.1",
+    "globby": "^11.0.1",
     "htmlparser2": "^4.1.0",
     "hyperpug": "^1.5.3",
     "incremental-dom": "^0.7.0",
