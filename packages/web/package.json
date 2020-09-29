@@ -1,0 +1,51 @@
+{
+  "name": "@make-pdf/web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": {
+    "name": "Pacharapol Withayasakpunt",
+    "email": "polv@polv.cc",
+    "url": "https://www.polv.cc"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm ts ./scripts/dev.ts",
+    "build": "pnpm ts ./scripts/build.ts",
+    "ts": "ts-node --transpile-only"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@make-pdf/cli": "*",
+    "@types/express": "^4.17.8",
+    "@types/parcel-bundler": "^1.12.1",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "eslint": "^6.2.2",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "express": "^4.17.1",
+    "import-sort-parser-typescript": "^6.0.0",
+    "parcel-bundler": "^1.12.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "engines": {
+    "node": "12.x",
+    "npm": "please-use-pnpm",
+    "pnpm": "5.x",
+    "yarn": "please-use-pnpm"
+  },
+  "engineStrict": true,
+  "importSort": {
+    ".js, .jsx, .ts, .tsx, .vue": {
+      "parser": "typescript",
+      "style": "module"
+    }
+  }
+}
