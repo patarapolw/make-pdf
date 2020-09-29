@@ -33,7 +33,7 @@ export const matter = {
         schema: yaml.JSON_SCHEMA
       })
 
-      if (typeof data === 'object' && !Array.isArray(data)) {
+      if (data && typeof data === 'object' && data.constructor === Object) {
         return { data: data as Record<string, T>, content }
       }
     }

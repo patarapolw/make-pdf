@@ -213,55 +213,66 @@ export class MakeHtml {
   }
 
   async parse (s: string): Promise<string> {
-    return (await this.render(s)).innerHTML
+    return (await this.render(
+      s,
+      this.w.document.createElement('div')
+    )).innerHTML
   }
 
-  async render (s: string, dom = this.w.document.body): Promise<Element> {
+  async render (s: string, dom: HTMLElement): Promise<Element> {
     try {
-      if (this.w.Prism) {
-        await Promise.all([
-          ...this.hl.prism.scripts.map((src) => {
-            const script = this.w.document.createElement('script')
-            return new Promise((resolve) => {
-              script.onload = () => {
-                resolve()
-                script.onload = null
-              }
-              script.src = src
-              this.w.document.body.append(script)
-            })
-          }),
-          ...this.hl.prism.styles.map((href) => {
-            const link = this.w.document.createElement('link')
-            link.rel = 'stylesheet'
-            return new Promise((resolve) => {
-              link.onload = () => {
-                resolve()
-                link.onload = null
-              }
-              link.href = href
-              this.w.document.head.append(link)
-            })
-          })
-        ])
+      let scriptTarget: HTMLElement | null = null
+
+      if (typeof window === 'undefined') {
+        scriptTarget = dom
+      } else if (!this.w.Prism && !this.w.document.querySelector('[data-highlight]')) {
+        scriptTarget = this.w.document.body
       }
 
-      const body = this.w.document.createElement('div')
-      body.className = `.${this.id}`
-      body.innerHTML = this._mdConvert(matter.split(s).content)
+      if (scriptTarget) {
+        const target = scriptTarget
+
+        this.hl.prism.scripts.map((src) => {
+          const script = this.w.document.createElement('script')
+          script.src = src
+          script.setAttribute('data-highlight', 'prism')
+          target.append(script)
+        })
+        this.hl.prism.styles.map((href) => {
+          const link = this.w.document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = href
+          link.setAttribute('data-highlight', 'prism')
+          target.prepend(link)
+        })
+      }
+
+      let body = dom.querySelector(`.${this.id}`)
+
+      if (!body) {
+        body = this.w.document.createElement('div')
+        body.className = `.${this.id}`
+        dom.append(body)
+        body.innerHTML = this._mdConvert(matter.split(s).content)
+      } else {
+        patch(body, incremental.make(
+          this._mdConvert(matter.split(s).content)
+        ))
+      }
 
       body.querySelectorAll('style').forEach((el) => {
-        el.innerHTML = scopeCss(el.innerHTML, `.${this.id}`)
+        el.innerHTML = scopeCss(el.innerHTML, `.${this.id}`, {
+          allowGlobal: true,
+          keyframes: true
+        })
       })
 
       body.querySelectorAll('img, iframe').forEach((el) => {
         el.setAttribute('loading', 'lazy')
       })
 
-      patch(dom, incremental.make(body.outerHTML))
-
       if (this.w.Prism) {
-        this.w.Prism.highlightAllUnder(dom)
+        this.w.Prism.highlightAllUnder(body)
       }
     } catch (_) {}
 

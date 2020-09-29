@@ -12,8 +12,9 @@
     "url": "https://www.polv.cc"
   },
   "scripts": {
-    "start": "ts-node --transpile-only src/index.ts",
-    "dev": "ts-node --transpile-only src/index.ts"
+    "start": "pnpm make",
+    "make": "pnpm ts src/index.ts",
+    "ts": "ts-node --transpile-only"
   },
   "dependencies": {
     "@patarapolw/markdown-it-imsize": "^2.0.1-dev3",
@@ -25,7 +26,7 @@
     "@types/node-fetch": "^2.5.7",
     "@types/prismjs": "^1.16.1",
     "@types/puppeteer": "^3.0.2",
-    "@types/ws": "^7.2.6",
+    "dayjs": "^1.9.1",
     "express": "^4.17.1",
     "globby": "^11.0.1",
     "htmlparser2": "^4.1.0",
@@ -33,6 +34,7 @@
     "incremental-dom": "^0.7.0",
     "js-yaml": "^3.14.0",
     "jsdom": "^16.4.0",
+    "jsonschema-definer": "^1.3.0",
     "markdown-it": "^11.0.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^1.4.0",
@@ -40,12 +42,11 @@
     "node-fetch": "^2.6.1",
     "pdf-lib": "^1.11.1",
     "puppeteer": "^5.3.1",
-    "scope-css": "^1.2.1",
-    "ws": "^7.3.1"
+    "scope-css": "github:patarapolw/scope-css"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/parser": "^4.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^7.10.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.1",

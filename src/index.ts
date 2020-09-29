@@ -1,14 +1,18 @@
 import fs from 'fs'
+import path from 'path'
 import { URL } from 'url'
 
 import express from 'express'
 import glob from 'globby'
-import { jsPDF as PDF, jsPDFOptions } from 'jspdf'
+import yaml from 'js-yaml'
 import fetch from 'node-fetch'
+import { PDFDocument } from 'pdf-lib'
 import puppeteer, { PDFOptions } from 'puppeteer'
 
-import { userRoot } from './config'
+import { sConfig, userIn, userOut } from './config'
+import { validateDate, validateTag } from './make-html/validate'
 import { router } from './server'
+import { naturalSort } from './sort'
 import { deepMerge } from './util'
 
 async function main () {
@@ -16,8 +20,8 @@ async function main () {
   app.use(router)
 
   const server = await new Promise<ReturnType<typeof app.listen>>((resolve) => {
-    app.listen(() => {
-      resolve(server)
+    const srv = app.listen(() => {
+      resolve(srv)
     })
   })
   let serverAddress = server.address()
@@ -25,11 +29,51 @@ async function main () {
     ? serverAddress
     : `http://localhost:${serverAddress?.port}`
 
-  const config: {
-    jsPDF: jsPDFOptions
-    chrome: PDFOptions
-  } = await fetch(new URL('/config', serverAddress).href)
-    .then((r) => r.json())
+  const { metadata = {}, printingOptions = {} } = ((): typeof sConfig.type => {
+    try {
+      return sConfig.ensure(yaml.safeLoad(fs.readFileSync(
+        path.resolve(userIn, 'config.yaml'),
+        'utf-8'
+      ), {
+        schema: yaml.JSON_SCHEMA
+      }) as typeof sConfig.type)
+    } catch (_) {}
+
+    return {}
+  })()
+
+  const pdf = await PDFDocument.create()
+  if (metadata.title) {
+    pdf.setTitle(metadata.title)
+  }
+  if (metadata.author) {
+    pdf.setAuthor(metadata.author)
+  }
+  if (metadata.subject) {
+    pdf.setSubject(metadata.subject)
+  }
+  if (metadata.keywords) {
+    const keywords = validateTag(metadata.keywords)
+    if (keywords) {
+      pdf.setKeywords(keywords)
+    }
+  }
+  if (metadata.producer) {
+    pdf.setProducer(metadata.producer)
+  }
+  if (metadata.creator) {
+    pdf.setCreator(metadata.creator)
+  }
+
+  metadata.creationDate = (metadata.creationDate
+    ? validateDate(metadata.creationDate) : '') || new Date().toISOString()
+
+  pdf.setCreationDate(new Date(metadata.creationDate))
+
+  metadata.modificationDate = (metadata.creationDate
+    ? validateDate(metadata.creationDate) : '') || metadata.creationDate
+
+  pdf.setModificationDate(new Date(metadata.modificationDate))
 
   /**
    * All possible units are:
@@ -47,9 +91,7 @@ async function main () {
       bottom: '0.7in'
     },
     format: 'A4'
-  }, config.chrome)
-
-  const pdf = new PDF(config.jsPDF)
+  }, printingOptions)
 
   const browser = await puppeteer.launch({
     headless: true
@@ -57,23 +99,30 @@ async function main () {
 
   const page = await browser.newPage()
 
-  const filename = './index.html'
-  await page.goto(new URL(`/${filename}`, serverAddress).href, {
-    waitUntil: 'networkidle0'
-  })
+  for (const f of (await glob('*.md', {
+    cwd: userIn
+  })).sort(naturalSort)) {
+    await page.goto(new URL(`/${f}?format=html`, serverAddress).href, {
+      waitUntil: 'networkidle0'
+    })
 
-  await glob('*.md', {
-    cwd: userRoot
-  }).then((files) => Promise.all(files.map(async (f) => {
-    pdf.fromHTML(await page.pdf(deepMerge(
-      pdfConfig,
-      await fetch(new URL(`/${f}?meta`, serverAddress).href)
-        .then((r) => r.json())
-        .catch(() => ({}))
-    )))
-  })))
+    const pages = await PDFDocument
+      .load(await page.pdf(deepMerge(
+        pdfConfig,
+        await fetch(new URL(`/${f}?format=meta`, serverAddress as string).href)
+          .then((r) => r.json())
+          .catch(() => ({}))
+      )))
+      .then((seg) => pdf.copyPages(
+        seg,
+        Array.from({
+          length: seg.getPageCount()
+        }, (_, i) => i)))
 
-  pdf.save('out.pdf')
+    pages.map((p) => pdf.addPage(p))
+  }
+
+  fs.writeFileSync(path.resolve(userOut, 'out.pdf'), await pdf.save())
 
   server.close()
   browser.close()
