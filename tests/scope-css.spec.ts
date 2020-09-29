@@ -1,6 +1,6 @@
-# Welcome
+import { scopeCss } from '@/make-html/css'
 
-<style>
+console.log(scopeCss(/* scss */`
 :global {
   body {
     position: fixed;
@@ -11,4 +11,8 @@
     justify-content: center;
   }
 }
-</style>
+
+html {
+  all: unset;
+}
+`, '.scope'))

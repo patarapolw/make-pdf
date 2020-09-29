@@ -14,18 +14,10 @@
   "scripts": {
     "start": "pnpm make",
     "make": "pnpm ts src/index.ts",
-    "ts": "ts-node --transpile-only"
+    "ts": "ts-node --transpile-only -r tsconfig-paths/register"
   },
   "dependencies": {
     "@patarapolw/markdown-it-imsize": "^2.0.1-dev3",
-    "@types/codemirror": "^0.0.98",
-    "@types/express": "^4.17.8",
-    "@types/js-yaml": "^3.12.5",
-    "@types/jsdom": "^16.2.4",
-    "@types/markdown-it": "^10.0.2",
-    "@types/node-fetch": "^2.5.7",
-    "@types/prismjs": "^1.16.1",
-    "@types/puppeteer": "^3.0.2",
     "dayjs": "^1.9.1",
     "express": "^4.17.1",
     "globby": "^11.0.1",
@@ -42,9 +34,18 @@
     "node-fetch": "^2.6.1",
     "pdf-lib": "^1.11.1",
     "puppeteer": "^5.3.1",
-    "scope-css": "github:patarapolw/scope-css"
+    "scope-css": "github:patarapolw/scope-css",
+    "stylis": "^4.0.3"
   },
   "devDependencies": {
+    "@types/codemirror": "^0.0.98",
+    "@types/express": "^4.17.8",
+    "@types/js-yaml": "^3.12.5",
+    "@types/jsdom": "^16.2.4",
+    "@types/markdown-it": "^10.0.2",
+    "@types/node-fetch": "^2.5.7",
+    "@types/prismjs": "^1.16.1",
+    "@types/puppeteer": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^7.10.0",
@@ -55,6 +56,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "import-sort-parser-typescript": "^6.0.0",
     "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.3"
   },
   "engines": {

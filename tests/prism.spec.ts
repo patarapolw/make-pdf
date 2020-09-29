@@ -1,9 +1,8 @@
 import { URL } from 'url'
 
+import { router } from '@/server'
 import express from 'express'
 import puppeteer from 'puppeteer'
-
-import { router } from '../src/server'
 
 async function main () {
   const f = '100.md'

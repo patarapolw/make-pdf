@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import { matter } from '../src/make-html/matter'
+import { matter } from '@/make-html/matter'
 
 console.log(
   matter.parse(
