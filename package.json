@@ -33,12 +33,12 @@
     "incremental-dom": "^0.7.0",
     "js-yaml": "^3.14.0",
     "jsdom": "^16.4.0",
-    "jspdf": "^2.1.1",
     "markdown-it": "^11.0.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^1.4.0",
     "markdown-it-external-links": "^0.0.6",
     "node-fetch": "^2.6.1",
+    "pdf-lib": "^1.11.1",
     "puppeteer": "^5.3.1",
     "scope-css": "^1.2.1",
     "ws": "^7.3.1"
