@@ -1,74 +1,59 @@
-import pdfMake from 'pdfmake/build/pdfmake'
-import { TDocumentDefinitions } from 'pdfmake/interfaces'
+import fs from 'fs'
+import { URL } from 'url'
+
+import express from 'express'
+import fetch from 'node-fetch'
+import puppeteer from 'puppeteer'
+
+import { router } from './server'
+import { deepMerge } from './util'
 
 async function main () {
-  const [config = {}, pdf, { files }] = await Promise.all([
-    fetch(`/api/config?v=${Math.random().toString(36).substr(2)}`)
-      .then((r) => r.json()),
-    fetch(`/api/pdf?v=${Math.random().toString(36).substr(2)}`)
-      .then((r) => r.json()),
-    fetch(`/api/files?v=${Math.random().toString(36).substr(2)}`)
-      .then((r) => r.json())
-  ])
+  const app = express()
+  app.use(router)
 
-  const fileSet = new Set<string>(files)
-  const vfs: Record<string, string> = {}
+  const server = app.listen()
+  let serverAddress = server.address()
+  serverAddress = typeof serverAddress === 'string'
+    ? serverAddress
+    : `http://localhost:${serverAddress?.port}`
 
-  async function resolveURL<T> (o: T): Promise<unknown> {
-    if (o && typeof o === 'object') {
-      if (Array.isArray(o)) {
-        return Promise.all(o.map((a) => resolveURL(a)))
-      } else if ((o as { constructor: unknown }).constructor === Object) {
-        return Promise.all(
-          Object.entries(o).map(([k, v]) => resolveURL(v).then((v1) => [k, v1]))
-        ).then((ps) => ps.reduce((prev, [k, v]) => ({
-          ...prev,
-          [k as string]: v
-        }), {}))
-      }
-    }
-
-    if (o && typeof o === 'string') {
-      let url: URL | null = null
-      if (fileSet.has((o as string).substr(1))) {
-        url = new URL(o, location.origin)
-      } else if (/^https?:\/\/[^ ]+$/.test(o)) {
-        try {
-          url = new URL(o)
-        } catch (_) {}
-      }
-
-      if (url) {
-        const p = o as string
-        const u = new URL('/api/base64', location.origin)
-        u.searchParams.set('url', url.href)
-
-        return fetch(u.href).then((r) => r.text()).then((r) => {
-          vfs[p] = r
-          if (p[0] === '/') {
-            vfs[p.substr(1)] = vfs[p]
-          }
-
-          return p
-        })
-      }
-    }
-
-    return o
-  }
-
-  const doc = await resolveURL(pdf) as TDocumentDefinitions
-  console.log(vfs)
-
-  pdfMake.createPdf(
-    doc,
-    config.table,
-    config.fonts,
-    vfs
-  ).getDataUrl((url) => {
-    const elIframe = document.querySelector('iframe') as HTMLIFrameElement
-    elIframe.src = url
+  const browser = await puppeteer.launch({
+    headless: true
   })
+
+  const page = await browser.newPage()
+
+  const filename = './index.html'
+  await page.goto(new URL(`/${filename}`, serverAddress).href, {
+    waitUntil: 'networkidle0'
+  })
+
+  /**
+   * All possible units are:
+   *
+   * - px - pixel
+   * - in - inch
+   * - cm - centimeter
+   * - mm - millimeter
+   */
+  fs.writeFileSync('out.pdf', await page.pdf(deepMerge(
+    {
+      margin: {
+        left: '1in',
+        right: '1in',
+        top: '0.7in',
+        bottom: '0.7in'
+      },
+      format: 'A4'
+    },
+    await fetch(new URL(`/${filename}?meta`, serverAddress).href)
+      .then((r) => r.json())
+      .catch(() => ({}))
+  )))
+
+  server.close()
+  browser.close()
 }
 
 main().catch(console.error)
