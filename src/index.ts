@@ -1,74 +1,131 @@
-import pdfMake from 'pdfmake/build/pdfmake'
-import { TDocumentDefinitions } from 'pdfmake/interfaces'
+import fs from 'fs'
+import path from 'path'
+import { URL } from 'url'
+
+import express from 'express'
+import glob from 'globby'
+import yaml from 'js-yaml'
+import fetch from 'node-fetch'
+import { PDFDocument } from 'pdf-lib'
+import puppeteer, { PDFOptions } from 'puppeteer'
+
+import { sConfig, userIn, userOut } from './config'
+import { validateDate, validateTag } from './make-html/validate'
+import { router } from './server'
+import { naturalSort } from './sort'
+import { deepMerge } from './util'
 
 async function main () {
-  const [config = {}, pdf, { files }] = await Promise.all([
-    fetch(`/api/config?v=${Math.random().toString(36).substr(2)}`)
-      .then((r) => r.json()),
-    fetch(`/api/pdf?v=${Math.random().toString(36).substr(2)}`)
-      .then((r) => r.json()),
-    fetch(`/api/files?v=${Math.random().toString(36).substr(2)}`)
-      .then((r) => r.json())
-  ])
+  const app = express()
+  app.use(router)
 
-  const fileSet = new Set<string>(files)
-  const vfs: Record<string, string> = {}
+  const server = await new Promise<ReturnType<typeof app.listen>>((resolve) => {
+    const srv = app.listen(() => {
+      resolve(srv)
+    })
+  })
+  let serverAddress = server.address()
+  serverAddress = typeof serverAddress === 'string'
+    ? serverAddress
+    : `http://localhost:${serverAddress?.port}`
 
-  async function resolveURL<T> (o: T): Promise<unknown> {
-    if (o && typeof o === 'object') {
-      if (Array.isArray(o)) {
-        return Promise.all(o.map((a) => resolveURL(a)))
-      } else if ((o as { constructor: unknown }).constructor === Object) {
-        return Promise.all(
-          Object.entries(o).map(([k, v]) => resolveURL(v).then((v1) => [k, v1]))
-        ).then((ps) => ps.reduce((prev, [k, v]) => ({
-          ...prev,
-          [k as string]: v
-        }), {}))
-      }
+  const { metadata = {}, printingOptions = {} } = ((): typeof sConfig.type => {
+    try {
+      return sConfig.ensure(yaml.safeLoad(fs.readFileSync(
+        path.resolve(userIn, 'config.yaml'),
+        'utf-8'
+      ), {
+        schema: yaml.JSON_SCHEMA
+      }) as typeof sConfig.type)
+    } catch (_) {}
+
+    return {}
+  })()
+
+  const pdf = await PDFDocument.create()
+  if (metadata.title) {
+    pdf.setTitle(metadata.title)
+  }
+  if (metadata.author) {
+    pdf.setAuthor(metadata.author)
+  }
+  if (metadata.subject) {
+    pdf.setSubject(metadata.subject)
+  }
+  if (metadata.keywords) {
+    const keywords = validateTag(metadata.keywords)
+    if (keywords) {
+      pdf.setKeywords(keywords)
     }
-
-    if (o && typeof o === 'string') {
-      let url: URL | null = null
-      if (fileSet.has((o as string).substr(1))) {
-        url = new URL(o, location.origin)
-      } else if (/^https?:\/\/[^ ]+$/.test(o)) {
-        try {
-          url = new URL(o)
-        } catch (_) {}
-      }
-
-      if (url) {
-        const p = o as string
-        const u = new URL('/api/base64', location.origin)
-        u.searchParams.set('url', url.href)
-
-        return fetch(u.href).then((r) => r.text()).then((r) => {
-          vfs[p] = r
-          if (p[0] === '/') {
-            vfs[p.substr(1)] = vfs[p]
-          }
-
-          return p
-        })
-      }
-    }
-
-    return o
+  }
+  if (metadata.producer) {
+    pdf.setProducer(metadata.producer)
+  }
+  if (metadata.creator) {
+    pdf.setCreator(metadata.creator)
   }
 
-  const doc = await resolveURL(pdf) as TDocumentDefinitions
-  console.log(vfs)
+  metadata.creationDate = (metadata.creationDate
+    ? validateDate(metadata.creationDate) : '') || new Date().toISOString()
 
-  pdfMake.createPdf(
-    doc,
-    config.table,
-    config.fonts,
-    vfs
-  ).getDataUrl((url) => {
-    const elIframe = document.querySelector('iframe') as HTMLIFrameElement
-    elIframe.src = url
+  pdf.setCreationDate(new Date(metadata.creationDate))
+
+  metadata.modificationDate = (metadata.creationDate
+    ? validateDate(metadata.creationDate) : '') || metadata.creationDate
+
+  pdf.setModificationDate(new Date(metadata.modificationDate))
+
+  /**
+   * All possible units are:
+   *
+   * - px - pixel
+   * - in - inch
+   * - cm - centimeter
+   * - mm - millimeter
+   */
+  const pdfConfig = deepMerge<PDFOptions>({
+    margin: {
+      left: '1in',
+      right: '1in',
+      top: '0.7in',
+      bottom: '0.7in'
+    },
+    format: 'A4'
+  }, printingOptions)
+
+  const browser = await puppeteer.launch({
+    headless: true
   })
+
+  const page = await browser.newPage()
+
+  for (const f of (await glob('*.md', {
+    cwd: userIn
+  })).sort(naturalSort)) {
+    await page.goto(new URL(`/${f}?format=html`, serverAddress).href, {
+      waitUntil: 'networkidle0'
+    })
+
+    const pages = await PDFDocument
+      .load(await page.pdf(deepMerge(
+        pdfConfig,
+        await fetch(new URL(`/${f}?format=meta`, serverAddress as string).href)
+          .then((r) => r.json())
+          .catch(() => ({}))
+      )))
+      .then((seg) => pdf.copyPages(
+        seg,
+        Array.from({
+          length: seg.getPageCount()
+        }, (_, i) => i)))
+
+    pages.map((p) => pdf.addPage(p))
+  }
+
+  fs.writeFileSync(path.resolve(userOut, 'out.pdf'), await pdf.save())
+
+  server.close()
+  browser.close()
 }
 
 main().catch(console.error)
