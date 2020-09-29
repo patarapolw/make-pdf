@@ -8,9 +8,9 @@ import mdContainer from 'markdown-it-container'
 import emoji from 'markdown-it-emoji'
 import externalLinks from 'markdown-it-external-links'
 import { unescapeAll } from 'markdown-it/lib/common/utils'
-import scopeCss from 'scope-css'
 
 import { hash } from '../util'
+import { scopeCss } from './css'
 import { incremental } from './incremental'
 import { matter } from './matter'
 
@@ -261,10 +261,7 @@ export class MakeHtml {
       }
 
       body.querySelectorAll('style').forEach((el) => {
-        el.innerHTML = scopeCss(el.innerHTML, `.${this.id}`, {
-          allowGlobal: true,
-          keyframes: true
-        })
+        el.innerHTML = scopeCss(el.innerHTML, `.${this.id}`)
       })
 
       body.querySelectorAll('img, iframe').forEach((el) => {

@@ -22,13 +22,15 @@ Secret to centering anything is CSS. As I enable [scope-css](https://www.npmjs.c
 
 ```html
 <style>
-:global body {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+:global {
+  body {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
 ```

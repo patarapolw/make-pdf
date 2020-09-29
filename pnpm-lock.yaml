@@ -1,13 +1,5 @@
 dependencies:
   '@patarapolw/markdown-it-imsize': 2.0.1-dev3
-  '@types/codemirror': 0.0.98
-  '@types/express': 4.17.8
-  '@types/js-yaml': 3.12.5
-  '@types/jsdom': 16.2.4
-  '@types/markdown-it': 10.0.2
-  '@types/node-fetch': 2.5.7
-  '@types/prismjs': 1.16.1
-  '@types/puppeteer': 3.0.2
   dayjs: 1.9.1
   express: 4.17.1
   globby: 11.0.1
@@ -25,7 +17,16 @@ dependencies:
   pdf-lib: 1.11.1
   puppeteer: 5.3.1
   scope-css: github.com/patarapolw/scope-css/d5f985ebc796677377c12b019f046b1929d2da2a
+  stylis: 4.0.3
 devDependencies:
+  '@types/codemirror': 0.0.98
+  '@types/express': 4.17.8
+  '@types/js-yaml': 3.12.5
+  '@types/jsdom': 16.2.4
+  '@types/markdown-it': 10.0.2
+  '@types/node-fetch': 2.5.7
+  '@types/prismjs': 1.16.1
+  '@types/puppeteer': 3.0.2
   '@typescript-eslint/eslint-plugin': 4.3.0_60de305021300fed1989a0be1a9284d2
   '@typescript-eslint/parser': 4.3.0_eslint@7.10.0+typescript@4.0.3
   eslint: 7.10.0
@@ -36,6 +37,7 @@ devDependencies:
   eslint-plugin-standard: 4.0.1_eslint@7.10.0
   import-sort-parser-typescript: 6.0.0
   ts-node: 9.0.0_typescript@4.0.3
+  tsconfig-paths: 3.9.0
   typescript: 4.0.3
 lockfileVersion: 5.1
 packages:
@@ -115,13 +117,13 @@ packages:
     dependencies:
       '@types/connect': 3.4.33
       '@types/node': 14.11.2
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-W98JrE0j2K78swW4ukqMleo8R7h/pFETjM2DQ90MF6XK2i4LO4W3gQ71Lt4w3bfm2EvVSyWHplECvB5sK22yFQ==
   /@types/codemirror/0.0.98:
     dependencies:
       '@types/tern': 0.23.3
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-cbty5LPayy2vNSeuUdjNA9tggG+go5vAxmnLDRWpiZI5a+RDBi9dlozy4/jW/7P/gletbBWbQREEa7A81YxstA==
   /@types/color-name/1.1.1:
@@ -131,11 +133,11 @@ packages:
   /@types/connect/3.4.33:
     dependencies:
       '@types/node': 14.11.2
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-2+FrkXY4zllzTNfJth7jOqEHC+enpLeGslEhpnTAkg21GkRrWV4SsAtqchtT4YS9/nODBU2/ZfsBY2X4J/dX7A==
   /@types/estree/0.0.45:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-jnqIUKDUqJbDIUxm0Uj7bnlMnRm1T/eZ9N+AVMqhPgzrba2GhGG5o/jCTwmdPK709nEZsGoMzXEDUjcXHa3W0g==
   /@types/express-serve-static-core/4.17.13:
@@ -143,7 +145,7 @@ packages:
       '@types/node': 14.11.2
       '@types/qs': 6.9.5
       '@types/range-parser': 1.2.3
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-RgDi5a4nuzam073lRGKTUIaL3eF2+H7LJvJ8eUnCI0wA6SNjXc44DCmWNiTLs/AZ7QlsFWZiw/gTG3nSQGL0fA==
   /@types/express/4.17.8:
@@ -152,11 +154,11 @@ packages:
       '@types/express-serve-static-core': 4.17.13
       '@types/qs': 6.9.5
       '@types/serve-static': 1.13.5
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-wLhcKh3PMlyA2cNAB9sjM1BntnhPMiM0JOBwPBqttjHev2428MLEB4AYVN+d8s2iyCVZac+o41Pflm/ZH5vLXQ==
   /@types/js-yaml/3.12.5:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-JCcp6J0GV66Y4ZMDAQCXot4xprYB+Zfd3meK9+INSJeVZwJmHAW30BBEEkPzXswMXuiyReUGOP3GxrADc9wPww==
   /@types/jsdom/16.2.4:
@@ -164,7 +166,7 @@ packages:
       '@types/node': 14.11.2
       '@types/parse5': 5.0.3
       '@types/tough-cookie': 4.0.0
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-RssgLa5ptjVKRkHho/Ex0+DJWkVsYuV8oh2PSG3gKxFp8n/VNyB7kOrZGQkk2zgPlcBkIKOItUc/T5BXit9uhg==
   /@types/json-schema/7.0.6:
@@ -176,14 +178,14 @@ packages:
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
   /@types/linkify-it/2.1.0:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-Q7DYAOi9O/+cLLhdaSvKdaumWyHbm7HAk/bFwwyTuU0arR5yyCeW5GOoqt4tJTpDRxhpx9Q8kQL6vMpuw9hDSw==
   /@types/markdown-it/10.0.2:
     dependencies:
       '@types/linkify-it': 2.1.0
       '@types/mdurl': 1.0.2
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-FGKiVW1UgeIEAChYAuHcfCd0W4LsMEyrSyTVaZiuJhwR4BwSVUD8JKnzmWAMK2FHNLZSPGUaEkpa/dkZj2uq1w==
   /@types/md5/2.2.0:
@@ -193,61 +195,60 @@ packages:
     resolution:
       integrity: sha512-JN8OVL/wiDlCWTPzplsgMPu0uE9Q6blwp68rYsfk2G8aokRUQ8XD9MEhZwihfAiQvoyE+m31m6i3GFXwYWomKQ==
   /@types/mdurl/1.0.2:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==
   /@types/mime/2.0.3:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-Jus9s4CDbqwocc5pOAnh8ShfrnMcPHuJYzVcSUU7lrh8Ni5HuIqX3oilL86p3dlTrk0LzHRCgA/GQ7uNCw6l2Q==
   /@types/node-fetch/2.5.7:
     dependencies:
       '@types/node': 14.11.2
       form-data: 3.0.0
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-o2WVNf5UhWRkxlf6eq+jMZDu7kjgpgJfl4xVNlvryc95O/6F2ld8ztKX+qu+Rjyet93WAWm5LjeX9H5FGkODvw==
   /@types/node/14.11.2:
-    dev: false
     resolution:
       integrity: sha512-jiE3QIxJ8JLNcb1Ps6rDbysDhN4xa8DJJvuC9prr6w+1tIh+QAbYyNF3tyiZNLDBIuBCf4KEcV2UvQm/V60xfA==
   /@types/parse5/5.0.3:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-kUNnecmtkunAoQ3CnjmMkzNU/gtxG8guhi+Fk2U/kOpIKjIMKnXGp4IJCgQJrXSgMsWYimYG4TGjz/UzbGEBTw==
   /@types/prismjs/1.16.1:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-RNgcK3FEc1GpeOkamGDq42EYkb6yZW5OWQwTS56NJIB8WL0QGISQglA7En7NUx9RGP8AC52DOe+squqbAckXlA==
   /@types/puppeteer/3.0.2:
     dependencies:
       '@types/node': 14.11.2
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-JRuHPSbHZBadOxxFwpyZPeRlpPTTeMbQneMdpFd8LXdyNfFSiX950CGewdm69g/ipzEAXAmMyFF1WOWJOL/nKw==
   /@types/qs/6.9.5:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-/JHkVHtx/REVG0VVToGRGH2+23hsYLHdyG+GrvoUGlGAd0ErauXDyvHtRI/7H7mzLm+tBCKA7pfcpkQ1lf58iQ==
   /@types/range-parser/1.2.3:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
   /@types/serve-static/1.13.5:
     dependencies:
       '@types/express-serve-static-core': 4.17.13
       '@types/mime': 2.0.3
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-6M64P58N+OXjU432WoLLBQxbA0LRGBCRm7aAGQJ+SMC1IMl0dgRVi9EFfoDcS2a7Xogygk/eGN94CfwU9UF7UQ==
   /@types/tern/0.23.3:
     dependencies:
       '@types/estree': 0.0.45
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-imDtS4TAoTcXk0g7u4kkWqedB3E4qpjXzCpD2LU5M5NAXHzCDsypyvXSaG7mM8DKYkCRa7tFp4tS/lp/Wo7Q3w==
   /@types/tough-cookie/4.0.0:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-I99sngh224D0M7XgW1s120zxCt3VYQ3IQsuw3P3jbq5GG4yc79+ZjyKznyOGIQrflfylLgcfekeZW/vk0yng6A==
   /@types/yauzl/2.9.1:
@@ -507,7 +508,6 @@ packages:
     resolution:
       integrity: sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
   /asynckit/0.4.0:
-    dev: false
     resolution:
       integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=
   /aws-sign2/0.7.0:
@@ -656,7 +656,6 @@ packages:
   /combined-stream/1.0.8:
     dependencies:
       delayed-stream: 1.0.0
-    dev: false
     engines:
       node: '>= 0.8'
     resolution:
@@ -783,7 +782,6 @@ packages:
     resolution:
       integrity: sha512-3MqfYKj2lLzdMSf8ZIZE/V+Zuy+BgD6f164e8K2w7dgnpKArBDerGYpM46IYYcjnkdPNMjPk9A6VFB8+3SKlXQ==
   /delayed-stream/1.0.0:
-    dev: false
     engines:
       node: '>=0.4.0'
     resolution:
@@ -1384,7 +1382,7 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.27
-    dev: false
+    dev: true
     engines:
       node: '>= 6'
     resolution:
@@ -1979,7 +1977,6 @@ packages:
     resolution:
       integrity: sha512-y7FpHSbMUMoyPbYUSzO6PaZ6FyRnQOpHuKwbo1G+Knck95XVU4QAiKdGEnj5wwoS7PlOgthX/09u5iFJ+aYf5Q==
   /mime-db/1.44.0:
-    dev: false
     engines:
       node: '>= 0.6'
     resolution:
@@ -1987,7 +1984,6 @@ packages:
   /mime-types/2.1.27:
     dependencies:
       mime-db: 1.44.0
-    dev: false
     engines:
       node: '>= 0.6'
     resolution:
@@ -2751,6 +2747,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+  /stylis/4.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-iAxdFyR9cHKp4H5M2dJlDnvcb/3TvPprzlKjvYVbH7Sh+y8hjY/mUu/ssdcvVz6Z4lKI3vsoS0jAkMYmX7ozfA==
   /supports-color/5.5.0:
     dependencies:
       has-flag: 3.0.0
@@ -3169,5 +3169,7 @@ specifiers:
   pdf-lib: ^1.11.1
   puppeteer: ^5.3.1
   scope-css: 'github:patarapolw/scope-css'
+  stylis: ^4.0.3
   ts-node: ^9.0.0
+  tsconfig-paths: ^3.9.0
   typescript: ^4.0.3
