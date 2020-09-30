@@ -1,28 +1,40 @@
-<link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+---
+geometry: a4paper,margin=3cm
+---
 
-<div class="pdf-center" data-markdown>
+\pagenumbering{gobble}
 
-# Class
+&nbsp;
+\vskip 5cm
+\begin{center}
+\LARGE Centered
+\end{center}
 
-</div>
+\newpage
 
-<!-- pdf-break -->
+```html
+<template>
+  <section />
+</template>
 
-```scss
-h1 {
-  div {
-    color: blue;
+<script lang="ts">
+export default {
+  data() {
+    return {
+      a: 1
+    }
   }
 }
+</script>
+
+<style>
+section:first-child {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
 ```
-
-<!-- pdf-break -->
-
-## h2
-
-Very good
-
-<!-- pdf-break -->
-
-![](test.png)

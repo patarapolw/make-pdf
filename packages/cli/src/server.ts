@@ -2,22 +2,46 @@ import fs from 'fs'
 import http from 'http'
 import path from 'path'
 
+import { BrowserWindow, PrintToPDFOptions, app as electron } from 'electron'
 import express from 'express'
 import morgan from 'morgan'
-import puppeteer, { Browser, PDFOptions } from 'puppeteer'
 
 import { MakeHtml } from './make-html'
 import { matter } from './make-html/matter'
 import { deepMerge } from './util'
 
-export async function makeFileServer (port = 0, { cwd }: {
+let pdfConfig: PrintToPDFOptions = {}
+
+async function main () {
+  let port = parseInt(process.env.PORT || '0')
+  let cwd = process.cwd()
+
+  if (process.env.config) {
+    try {
+      const msg = JSON.parse(process.env.config)
+      port = msg.port
+      cwd = msg.cwd
+      pdfConfig = msg.pdfConfig
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  await electron.whenReady()
+
+  const srv = makeFileServer(port, { cwd })
+
+  process.openStdin()
+    .write(JSON.stringify({ type: 'ready', baseURL: srv.baseURL }))
+}
+
+export function makeFileServer (port = 0, { cwd }: {
   cwd: string
-}): Promise<{
+}): {
+  app: express.Express
   server: http.Server
-  browser: Browser
-  close(): Promise<void>
-  baseURL(): string
-}> {
+  baseURL: string
+} {
   const app = express()
 
   if (process.env.DEBUG) {
@@ -57,39 +81,37 @@ export async function makeFileServer (port = 0, { cwd }: {
             fs.readFileSync(filepath, 'utf-8')
           ))
           return
-        } else if (format === 'pdf') {
+        } else if (typeof electron !== 'undefined' && format === 'pdf') {
           const { data } = matter.parse(
             fs.readFileSync(filepath, 'utf-8')
-          ).data
-
-          const pdfConfig = deepMerge<PDFOptions>({
-            margin: {
-              left: '1in',
-              right: '1in',
-              top: '0.7in',
-              bottom: '0.7in'
-            },
-            format: 'A4',
-            printBackground: true
-          }, data)
-
-          const page = await browser.newPage()
+          )
 
           const addr = srv.address()
           const url = new URL(`${req.path}?format=html`, typeof addr === 'string'
             ? addr
             : `http://localhost:${addr?.port}`).href
 
-          await page.goto(url, {
-            waitUntil: 'networkidle0'
+          const win = new BrowserWindow({
+            show: false
           })
 
-          console.log(page)
+          win.loadURL(url)
 
-          res.contentType('application/pdf')
-          const b = await page.pdf(pdfConfig)
-          await page.close()
-          res.send(b)
+          await new Promise((resolve, reject) => {
+            win.webContents.once('did-finish-load', () => {
+              win.webContents.printToPDF(
+                deepMerge(pdfConfig, data)
+              )
+                .then((b) => {
+                  res.contentType('application/pdf').send(b)
+                  resolve()
+                })
+                .catch(reject)
+            })
+          })
+
+          win.close()
+
           return
         }
       }
@@ -103,24 +125,19 @@ export async function makeFileServer (port = 0, { cwd }: {
   app.get('/favicon.ico', (_, res) => res.send(''))
 
   const srv = app.listen(port)
-  const browser = await puppeteer.launch({
-    headless: true
-  })
 
   return {
+    app,
     server: srv,
-    browser,
-    async close () {
-      await Promise.all([
-        srv.close(),
-        browser.close()
-      ])
-    },
-    baseURL () {
+    baseURL: (() => {
       const addr = srv.address()
       return typeof addr === 'string'
         ? addr
         : `http://localhost:${addr ? addr.port : null}`
-    }
+    })()
   }
+}
+
+if (require.main === module) {
+  main().catch(console.error)
 }

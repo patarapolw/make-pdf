@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
+import { fork } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
+import { PrintToPDFOptions } from 'electron'
 import express from 'express'
 import yaml from 'js-yaml'
 import S, { ObjectSchema } from 'jsonschema-definer'
@@ -10,11 +12,9 @@ import morgan from 'morgan'
 import fetch from 'node-fetch'
 import open from 'open'
 import { PDFDocument } from 'pdf-lib'
-import { Browser, PDFOptions } from 'puppeteer'
 import yargs from 'yargs'
 
 import { validateDate, validateTag } from './make-html/validate'
-import { makeFileServer } from './server'
 import { deepMerge } from './util'
 
 async function main () {
@@ -86,10 +86,11 @@ async function main () {
       type: 'boolean'
     })
 
+  const cwd = argv.root || process.cwd()
+
+  const files = argv._.map((f) => path.relative(cwd, f))
   const outFile = argv._[0].replace(/\.[A-Za-z0-9]+$/, '') + '.pdf'
 
-  const cwd = argv.root as string
-  const files = argv._.map((f) => path.relative(cwd, f))
   const sConfig = S.shape({
     metadata: S.shape({
       title: S.string().optional(),
@@ -101,12 +102,12 @@ async function main () {
       creationDate: S.string().optional(),
       modificationDate: S.string().optional()
     }).optional(),
-    printingOptions: S.object()
+    options: S.object()
       .additionalProperties(true)
-      .optional() as ObjectSchema<PDFOptions, false>
+      .optional() as ObjectSchema<PrintToPDFOptions, false>
   })
 
-  const { metadata = {}, printingOptions = {} } = ((): typeof sConfig.type => {
+  const { metadata = {}, options = {} } = ((): typeof sConfig.type => {
     try {
       return sConfig.ensure(yaml.safeLoad(fs.readFileSync(
         path.resolve(cwd, argv.config || 'config.yaml'),
@@ -119,16 +120,70 @@ async function main () {
     return {}
   })()
 
-  const fileServer = await makeFileServer(0, { cwd })
+  /**
+   * All possible units are:
+   *
+   * - px - pixel
+   * - in - inch
+   * - cm - centimeter
+   * - mm - millimeter
+   */
+  const pdfConfig = deepMerge<PrintToPDFOptions>({
+    marginsType: 50,
+    pageSize: 'A4'
+  }, options)
+
+  const electron = fork(path.resolve(__dirname, './server.js'), {
+    stdio: ['pipe', 'inherit', 'inherit', 'ipc'],
+    execPath: path.resolve(__dirname, '../node_modules/.bin/electron'),
+    env: {
+      ...process.env,
+      config: JSON.stringify({
+        port: argv.preview ? argv.port : 0,
+        cwd,
+        pdfConfig
+      })
+    }
+  })
+
+  let electronBaseURL = 'http://localhost'
+
+  await new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    electron.stdin!.on('data', (data: Buffer) => {
+      try {
+        const msg = JSON.parse(data.toString('utf8'))
+
+        if (argv.preview) {
+          const url = new URL(
+          `/${path.relative(cwd, argv._[0])}?format=pdf`,
+          msg.baseURL
+          ).href
+
+          open(url)
+        } else {
+          electronBaseURL = msg.baseURL
+        }
+        resolve()
+      } catch (e) {
+        console.error(e)
+      }
+    })
+  })
+
+  if (argv.preview) {
+    return
+  }
 
   const app = express()
+
   if (process.env.DEBUG) {
     app.use(morgan('combined'))
   }
 
   app.get('/file/*', (req, res) => {
     const url = new URL(`/${req.url.replace(/^\/file\//, '')}`,
-      fileServer.baseURL())
+      electronBaseURL)
     res.redirect(url.href)
   })
 
@@ -172,11 +227,12 @@ async function main () {
   }
 
   async function combinePDF (f0: string, ...otherFiles: string[]) {
-    const baseURL = fileServer.baseURL()
-    const pdf = await PDFDocument.load(await getPdf(fileServer.browser, f0, {
-      baseURL,
-      printingOptions
-    }))
+    const pdf = await PDFDocument.load(
+      await fetch(new URL(`/${f0}?format=pdf`, electronBaseURL).href)
+        .then((r) => r.buffer())
+    )
+
+    console.log(new URL(`/${f0}?format=pdf`, electronBaseURL).href)
 
     if (metadata.title) {
       pdf.setTitle(metadata.title)
@@ -211,11 +267,12 @@ async function main () {
     pdf.setModificationDate(new Date(metadata.modificationDate))
 
     for (const f of otherFiles) {
+      console.log(new URL(`/${f}?format=pdf`, electronBaseURL).href)
       await PDFDocument
-        .load(await getPdf(fileServer.browser, f, {
-          baseURL,
-          printingOptions
-        }))
+        .load(
+          await fetch(new URL(`/${f}?format=pdf`, electronBaseURL).href)
+            .then((r) => r.buffer())
+        )
         .then((seg) => pdf.copyPages(
           seg,
           Array.from({
@@ -233,50 +290,7 @@ async function main () {
   fs.writeFileSync(outFile, await combinePDF(f0, ...otherFiles))
 
   srv.close()
-  fileServer.close()
-}
-
-async function getPdf (browser: Browser, f: string, {
-  baseURL,
-  printingOptions
-}: {
-  baseURL: string,
-  printingOptions: PDFOptions
-}): Promise<Buffer> {
-  /**
-   * All possible units are:
-   *
-   * - px - pixel
-   * - in - inch
-   * - cm - centimeter
-   * - mm - millimeter
-   */
-  const pdfConfig = deepMerge<PDFOptions>({
-    margin: {
-      left: '1in',
-      right: '1in',
-      top: '0.7in',
-      bottom: '0.7in'
-    },
-    format: 'A4'
-  }, printingOptions)
-
-  const page = await browser.newPage()
-
-  await page.goto(new URL(`/${f}?format=pdf`, baseURL).href, {
-    waitUntil: 'networkidle0'
-  })
-
-  const b = await page.pdf(deepMerge(
-    pdfConfig,
-    await fetch(new URL(`/${f}?format=meta`, baseURL).href)
-      .then((r) => r.json())
-      .catch(() => ({}))
-  ))
-
-  await page.close()
-
-  return b
+  electron.kill()
 }
 
 if (require.main === module) {
