@@ -1,6 +1,6 @@
 {
   "name": "@make-pdf/web",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "",
   "keywords": [],
@@ -12,28 +12,27 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm ts ./scripts/dev.ts",
-    "build": "pnpm ts ./scripts/build.ts",
-    "ts": "ts-node --transpile-only"
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html -d ../cli/public",
+    "shamefully-hoist": "U='shamefully-hoist=true'; grep $U ~/.npmrc >/dev/null 2>&1 || echo $U >> ~/.npmrc"
   },
-  "dependencies": {},
+  "dependencies": {
+    "codemirror": "^5.58.1",
+    "html2canvas": "^1.0.0-rc.7",
+    "jspdf": "^2.1.1"
+  },
   "devDependencies": {
-    "@patarapolw/make-pdf": "*",
-    "@types/express": "^4.17.8",
-    "@types/parcel-bundler": "^1.12.1",
-    "@typescript-eslint/eslint-plugin": "^4.3.0",
-    "@typescript-eslint/parser": "^4.3.0",
-    "eslint": "^6.2.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.10.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "express": "^4.17.1",
-    "import-sort-parser-typescript": "^6.0.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "flow-bin": "^0.135.0",
     "parcel-bundler": "^1.12.4",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.3"
+    "sass": "^1.26.11"
   },
   "engines": {
     "node": "12.x",
@@ -42,10 +41,8 @@
     "yarn": "please-use-pnpm"
   },
   "engineStrict": true,
-  "importSort": {
-    ".js, .jsx, .ts, .tsx, .vue": {
-      "parser": "typescript",
-      "style": "module"
-    }
-  }
+  "browserslist": [
+    "last 5 chrome versions",
+    "last 5 firefox versions"
+  ]
 }

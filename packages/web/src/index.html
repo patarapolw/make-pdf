@@ -1,13 +1,24 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PDF viewer</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="main.scss">
 </head>
 <body>
-  <iframe frameborder="0"></iframe>
-  <script src="main.ts"></script>
+  <div style="display: none; border: 1px solid gray;">
+    <div data-pdf-section></div>
+  </div>
+
+  <section class="main-section">
+    <article class="editor is-half">
+      <textarea></textarea>
+    </article>
+    <article class="viewer is-half">
+      <iframe frameborder="0"></iframe>
+    </article>
+  </section>
+
+  <script src="main.js"></script>
 </body>
 </html>

@@ -1,0 +1,54 @@
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    //- Some other supported meta tags include `revised`
+    //- I tried to comply most to https://www.tutorialbrain.com/html_tutorial/html_meta_tags/
+    //- <title/> tag will also be parsed to metadata
+    meta(name="author" content="Pacharapol Withayasakpunt")
+
+    //- I also added custom meta tags, just for parsing
+    //- Naming will just as same as Electron's PrintToPDFOptions
+    //- It will be parsed using YAML
+    meta(name="pdf:pageSize" content="A4")
+    meta(name="pdf:printBackground" content="true")
+    //- If you don't set meta tags for this, outside PDF sections will be default-margins.
+    meta(name="pdf:marginsType" content="0")
+
+    //- Set options for Showdown.js (Markdown parser)
+    meta(name="showdown:parseImgDimensions" content="true")
+    meta(name="showdown:strikethrough" content="true")
+    meta(name="showdown:emoji" content="true")
+    meta(name="showdown:metadata" content="true")
+
+    title Example PDF
+
+    //- Find your wanted theme, probably classless CSS,
+    //- e.g. https://github.com/dbohdan/classless-css
+    //- So that you can freely use Markdown
+    link(rel='stylesheet' href='https://unpkg.com/awsm.css/dist/awsm.min.css')
+  body
+    pdf-center-vertical
+      center:h1 Welcome to MakePDF
+    
+    p Text is now zero margin.
+
+    pdf-break
+
+    h2 Page break is easy.
+
+    pdf-section(style="margin: 5em;")
+      //- I also include parsers for Markdown (Showdown.js), and SCSS
+      include:showdown 100.md
+
+    //- Plugin for <pdf-*> custom elements
+    !{plugins.pdf}
+
+    //- Include the code necessary for code highlighting.
+    //- This is just my trusted extended version of
+    //- link(href='https://myCDN.com/prism@v1.x/themes/prism.css' rel='stylesheet')
+    //- script(src='https://myCDN.com/prism@v1.x/components/prism-core.min.js')
+    //- script(src='https://myCDN.com/prism@v1.x/plugins/autoloader/prism-autoloader.min.js')
+    //- served on cdnjs
+    !{plugins.prism}

@@ -5,19 +5,19 @@ module.exports = {
   },
   extends: [
     'standard',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:flowtype/recommended'
   ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
   },
-  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
+  parser: 'babel-eslint',
   plugins: [
-    '@typescript-eslint'
+    'flowtype'
   ],
   rules: {
   }
