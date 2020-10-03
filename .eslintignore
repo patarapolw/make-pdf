@@ -1,8 +1,0 @@
-.*
-*.*
-!*.js
-!*.ts
-node_modules/
-dist/
-public/
-/packages/cli/lib/
