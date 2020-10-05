@@ -88,12 +88,12 @@ async function main() {
 
   const top = parseInclude(argv.infile)
 
-  const parsedMarkdown = ejs.render(top.content, {
+  const parsedMarkdown = await ejs.render(top.content, {
     ...top.data,
     include: (s: string): string => {
       return parseInclude(s).content
     }
-  })
+  }, { async: true })
 
   await new Promise((resolve, reject) => {
     exec(

@@ -1,3 +1,45 @@
-const url = new URL(location.href)
-const elIFrame = document.querySelector('iframe') as HTMLIFrameElement
-elIFrame.src = `/file/${url.searchParams.get('file') || 'index.md'}?format=pdf`
+import './main.scss'
+
+import CodeMirror from 'codemirror'
+
+import { cmOptions } from './plugins/codemirror'
+import { makePng, parseHighlight } from './md-to-png'
+
+window.CodeMirror = CodeMirror
+
+async function main () {
+  const cm = CodeMirror.fromTextArea(
+    document.querySelector('textarea') as HTMLTextAreaElement,
+    cmOptions
+  )
+
+  cm.addKeyMap({
+    'Cmd-S': () => {
+      reload()
+    },
+    'Ctrl-S': () => {
+      reload()
+    }
+  })
+
+  cm.setSize('100%', '100%')
+  cm.on('change', () => {
+    parseHighlight(
+      cm.getValue(),
+      document.querySelector('[data-output]') as HTMLDivElement
+    )
+  })
+
+  async function reload () {
+    const img = document.querySelector('.viewer > img') as HTMLImageElement
+    img.src = await makePng(
+      cm.getValue(),
+      document.querySelector('[data-output]') as HTMLDivElement,
+      {
+        width: '45vw'
+      }
+    )
+  }
+}
+
+main().catch(console.error)
