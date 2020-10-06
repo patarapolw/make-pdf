@@ -1,0 +1,168 @@
+Info 0    [21:34:26.242] Starting TS Server
+Info 1    [21:34:26.242] Version: 4.0.3
+Info 2    [21:34:26.242] Arguments: /usr/share/code/code /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/sdks/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --enableTelemetry --cancellationPipeName /tmp/vscode-typescript1000/b3a7d2e0f18b6fdfd22c/tscancellation-1bee301e776227680305.tmp* --logVerbosity verbose --logFile /home/patarapolw/.config/Code/logs/20201006T204449/exthost1/vscode.typescript-language-features/tsserver-log-8QIv8P/tsserver.log --globalPlugins typescript-vscode-sh-plugin --pluginProbeLocations /usr/share/code/resources/app/extensions/typescript-language-features --locale en --noGetErrOnBackgroundUpdate --validateDefaultNpmLocation
+Info 3    [21:34:26.242] Platform: linux NodeVersion: 12 CaseSensitive: true
+Info 4    [21:34:26.242] ServerMode: undefined syntaxOnly: false hasUnknownServerMode: undefined
+Info 5    [21:34:26.247] Binding...
+Info 6    [21:34:26.264] request:
+    {"seq":0,"type":"request","command":"configure","arguments":{"hostInfo":"vscode","preferences":{"providePrefixAndSuffixTextForRename":true,"allowRenameOfImportPath":true,"includePackageJsonAutoImports":"auto"},"watchOptions":{}}}
+Info 7    [21:34:26.264] Host information vscode
+Info 8    [21:34:26.265] Host watch options changed to undefined, it will be take effect for next watches.
+Info 9    [21:34:26.265] response:
+    {"seq":0,"type":"response","command":"configure","request_seq":0,"success":true}
+Perf 10   [21:34:26.267] 0::configure: async elapsed time (in milliseconds) 2.8803
+Info 11   [21:34:26.267] request:
+    {"seq":1,"type":"request","command":"compilerOptionsForInferredProjects","arguments":{"options":{"module":"commonjs","target":"es2016","jsx":"preserve","sourceMap":true,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"resolveJsonModule":true}}}
+Info 12   [21:34:26.268] Scheduled: *ensureProjectForOpenFiles*
+Perf 13   [21:34:26.268] 1::compilerOptionsForInferredProjects: elapsed time (in milliseconds) 0.8847
+Info 14   [21:34:26.269] response:
+    {"seq":0,"type":"response","command":"compilerOptionsForInferredProjects","request_seq":1,"success":true,"body":true}
+Info 15   [21:34:26.269] request:
+    {"seq":2,"type":"request","command":"updateOpen","arguments":{"changedFiles":[],"closedFiles":[],"openFiles":[{"file":"/home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx","fileContent":"import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';\nimport React from 'react';\n\n// Create styles\nconst styles = StyleSheet.create({\n  page: {\n    flexDirection: 'row',\n    padding: '2cm'\n  },\n  section: {\n    margin: 10,\n    padding: 10,\n    flexGrow: 1\n  }\n});\n\n// Create Document Component\nconst MyDocument = () => (\n  <Document>\n    <Page size=\"A4\" style={styles.page}>\n      <Text>Section #1</Text>\n    </Page>\n    <Page size=\"A4\" style={styles.page}>\n      <View style={styles.section}>\n        <Text>Section #1</Text>\n      </View>\n      <View style={styles.section}>\n        <Text>Section #2</Text>\n      </View>\n    </Page>\n  </Document>\n);\n\nexport default MyDocument","projectRootPath":"/home/patarapolw/projects/make-pdf/packages/mdx","scriptKindName":"JSX"}]}}
+Info 16   [21:34:26.271] Search path: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf
+Info 17   [21:34:26.273] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/tsconfig.json Currently impacted open files: RootsOfInferredProjects:  OtherOpenFiles: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx Status: File added to open files impacted by this config file
+Info 18   [21:34:26.274] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/jsconfig.json Currently impacted open files: RootsOfInferredProjects:  OtherOpenFiles: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx Status: File added to open files impacted by this config file
+Info 19   [21:34:26.274] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/tsconfig.json Currently impacted open files: RootsOfInferredProjects:  OtherOpenFiles: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx Status: File added to open files impacted by this config file
+Info 20   [21:34:26.274] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/jsconfig.json Currently impacted open files: RootsOfInferredProjects:  OtherOpenFiles: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx Status: File added to open files impacted by this config file
+Info 21   [21:34:26.275] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/tsconfig.json Currently impacted open files: RootsOfInferredProjects:  OtherOpenFiles: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx Status: File added to open files impacted by this config file
+Info 22   [21:34:26.275] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/jsconfig.json Currently impacted open files: RootsOfInferredProjects:  OtherOpenFiles: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx Status: File added to open files impacted by this config file
+Info 23   [21:34:26.275] For info: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx :: No config files found.
+Info 24   [21:34:26.280] Loading global plugin typescript-vscode-sh-plugin
+Info 25   [21:34:26.280] Enabling plugin typescript-vscode-sh-plugin from candidate paths: /usr/share/code/resources/app/extensions/typescript-language-features,/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/tsserver.js/../../..
+Info 26   [21:34:26.281] Loading typescript-vscode-sh-plugin from /usr/share/code/resources/app/extensions/typescript-language-features (resolved to /usr/share/code/resources/app/extensions/typescript-language-features/node_modules)
+Info 27   [21:34:26.311] typescript-vscode-sh-plugin initialized. Intercepting getEncodedSemanticClassifications and getEncodedSyntacticClassifications.
+Info 28   [21:34:26.311] Plugin validation succeded
+Info 29   [21:34:26.312] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/tsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Open file was set as Inferred root
+Info 30   [21:34:26.312] FileWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/tsconfig.json 2000 undefined Project:  WatchType: Config file for the inferred project root
+Info 31   [21:34:26.313] ConfigFilePresence:: Current Watches: Config file for the inferred project root:: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/tsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Updated the callback
+Info 32   [21:34:26.313] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/jsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Open file was set as Inferred root
+Info 33   [21:34:26.313] FileWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/jsconfig.json 2000 undefined Project:  WatchType: Config file for the inferred project root
+Info 34   [21:34:26.313] ConfigFilePresence:: Current Watches: Config file for the inferred project root:: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/jsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Updated the callback
+Info 35   [21:34:26.313] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/tsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Open file was set as Inferred root
+Info 36   [21:34:26.313] FileWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/src/tsconfig.json 2000 undefined Project:  WatchType: Config file for the inferred project root
+Info 37   [21:34:26.314] ConfigFilePresence:: Current Watches: Config file for the inferred project root:: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/tsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Updated the callback
+Info 38   [21:34:26.314] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/jsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Open file was set as Inferred root
+Info 39   [21:34:26.314] FileWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/src/jsconfig.json 2000 undefined Project:  WatchType: Config file for the inferred project root
+Info 40   [21:34:26.314] ConfigFilePresence:: Current Watches: Config file for the inferred project root:: File: /home/patarapolw/projects/make-pdf/packages/mdx/src/jsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Updated the callback
+Info 41   [21:34:26.314] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/tsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Open file was set as Inferred root
+Info 42   [21:34:26.314] FileWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/tsconfig.json 2000 undefined Project:  WatchType: Config file for the inferred project root
+Info 43   [21:34:26.314] ConfigFilePresence:: Current Watches: Config file for the inferred project root:: File: /home/patarapolw/projects/make-pdf/packages/mdx/tsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Updated the callback
+Info 44   [21:34:26.314] ConfigFilePresence:: Current Watches: :: File: /home/patarapolw/projects/make-pdf/packages/mdx/jsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Open file was set as Inferred root
+Info 45   [21:34:26.314] FileWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/jsconfig.json 2000 undefined Project:  WatchType: Config file for the inferred project root
+Info 46   [21:34:26.314] ConfigFilePresence:: Current Watches: Config file for the inferred project root:: File: /home/patarapolw/projects/make-pdf/packages/mdx/jsconfig.json Currently impacted open files: RootsOfInferredProjects: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx OtherOpenFiles:  Status: Updated the callback
+Info 47   [21:34:26.317] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 48   [21:34:26.408] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/@react-pdf-renderer-virtual-f4cbfa29a4/0/cache/@react-pdf-renderer-npm-1.6.11-42e7ec1c7e-9e9f4220e1.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 49   [21:34:26.413] Elapsed:: 5ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/@react-pdf-renderer-virtual-f4cbfa29a4/0/cache/@react-pdf-renderer-npm-1.6.11-42e7ec1c7e-9e9f4220e1.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 50   [21:34:27.204] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 51   [21:34:27.254] Elapsed:: 50ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 52   [21:34:28.849] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn 1 undefined Project: /dev/null/inferredProject1* WatchType: Failed Lookup Locations
+Info 53   [21:34:29.24] Elapsed:: 175ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn 1 undefined Project: /dev/null/inferredProject1* WatchType: Failed Lookup Locations
+Info 54   [21:34:29.25] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/.cache/typescript/4.0/node_modules 1 undefined Project: /dev/null/inferredProject1* WatchType: Failed Lookup Locations
+Info 55   [21:34:29.96] Elapsed:: 71ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/.cache/typescript/4.0/node_modules 1 undefined Project: /dev/null/inferredProject1* WatchType: Failed Lookup Locations
+Info 56   [21:34:29.97] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/node_modules/@types 1 undefined Project: /dev/null/inferredProject1* WatchType: Type roots
+Info 57   [21:34:29.98] Elapsed:: 1ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/node_modules/@types 1 undefined Project: /dev/null/inferredProject1* WatchType: Type roots
+Info 58   [21:34:29.99] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/node_modules/@types 1 undefined Project: /dev/null/inferredProject1* WatchType: Type roots
+Info 59   [21:34:29.99] Elapsed:: 0ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/node_modules/@types 1 undefined Project: /dev/null/inferredProject1* WatchType: Type roots
+Info 60   [21:34:29.99] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/node_modules/@types 1 undefined Project: /dev/null/inferredProject1* WatchType: Type roots
+Info 61   [21:34:29.99] Elapsed:: 0ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/node_modules/@types 1 undefined Project: /dev/null/inferredProject1* WatchType: Type roots
+Info 62   [21:34:29.99] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: true Elapsed: 2782ms
+Info 63   [21:34:29.100] Project '/dev/null/inferredProject1*' (Inferred)
+Info 64   [21:34:29.100] 	Files (24)
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es5.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.dom.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.dom.iterable.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.webworker.importscripts.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.scripthost.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.core.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.collection.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.generator.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.iterable.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.promise.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.proxy.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.reflect.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.symbol.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.array.include.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.full.d.ts
+	/home/patarapolw/.cache/typescript/4.0/node_modules/@types/react/global.d.ts
+	/home/patarapolw/.cache/typescript/4.0/node_modules/csstype/index.d.ts
+	/home/patarapolw/.cache/typescript/4.0/node_modules/@types/prop-types/index.d.ts
+	/home/patarapolw/.cache/typescript/4.0/node_modules/@types/react/index.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/@react-pdf-renderer-virtual-f4cbfa29a4/0/cache/@react-pdf-renderer-npm-1.6.11-42e7ec1c7e-9e9f4220e1.zip/node_modules/@react-pdf/renderer/index.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx
+
+Info 65   [21:34:29.100] -----------------------------------------------
+Info 66   [21:34:29.101] Scheduling throttled operation:
+    {"projectName":"/dev/null/inferredProject1*","fileNames":["/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es5.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.dom.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.dom.iterable.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.scripthost.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.core.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.collection.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.generator.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.iterable.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.promise.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.proxy.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.reflect.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.symbol.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.array.include.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.full.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx"],"compilerOptions":{"module":1,"target":3,"jsx":1,"sourceMap":true,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"resolveJsonModule":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typeAcquisition":{"enable":true,"include":[],"exclude":[]},"unresolvedImports":[],"projectRootPath":"/home/patarapolw/projects/make-pdf/packages/mdx","kind":"discover"}
+Info 67   [21:34:29.101] Scheduling request for: /dev/null/inferredProject1*
+Info 68   [21:34:29.103] FileWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/package.json 250 undefined Project:  WatchType: package.json file for import suggestions
+Info 69   [21:34:29.145] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/@testing-library-user-event-virtual-855537e264/0/cache/@testing-library-user-event-npm-7.2.1-f23077a34e-ab663d5e0b.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 70   [21:34:29.149] Elapsed:: 4ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/@testing-library-user-event-virtual-855537e264/0/cache/@testing-library-user-event-npm-7.2.1-f23077a34e-ab663d5e0b.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 71   [21:34:29.149] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/iconv-lite-npm-0.6.2-13e85ec7dc-0785670120.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 72   [21:34:29.151] Elapsed:: 2ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/iconv-lite-npm-0.6.2-13e85ec7dc-0785670120.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 73   [21:34:29.151] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/react-scripts-virtual-297d9e4f8d/0/cache/react-scripts-npm-3.4.3-a91e1c0256-63a9f736e5.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 74   [21:34:29.158] Elapsed:: 7ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/react-scripts-virtual-297d9e4f8d/0/cache/react-scripts-npm-3.4.3-a91e1c0256-63a9f736e5.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 75   [21:34:29.158] Starting updateGraphWorker: Project: /dev/null/autoImportProviderProject1*
+Info 76   [21:34:29.173] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/react-npm-16.13.1-56d408860d-13dcc9ba8a.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 77   [21:34:29.174] Elapsed:: 1ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/react-npm-16.13.1-56d408860d-13dcc9ba8a.zip/node_modules 1 undefined Project:  WatchType: node_modules for closed script infos in them
+Info 78   [21:34:29.177] DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn 1 undefined Project: /dev/null/autoImportProviderProject1* WatchType: Failed Lookup Locations
+Info 79   [21:34:29.177] Elapsed:: 0ms DirectoryWatcher:: Added:: WatchInfo: /home/patarapolw/projects/make-pdf/packages/mdx/.yarn 1 undefined Project: /dev/null/autoImportProviderProject1* WatchType: Failed Lookup Locations
+Info 80   [21:34:29.347] Finishing updateGraphWorker: Project: /dev/null/autoImportProviderProject1* Version: 1 structureChanged: true Elapsed: 188ms
+Info 81   [21:34:29.347] Project '/dev/null/autoImportProviderProject1*' (AutoImportProvider)
+Info 82   [21:34:29.347] 	Files (6)
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/@testing-library-user-event-virtual-855537e264/0/cache/@testing-library-user-event-npm-7.2.1-f23077a34e-ab663d5e0b.zip/node_modules/@testing-library/user-event/typings/index.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/iconv-lite-npm-0.6.2-13e85ec7dc-0785670120.zip/node_modules/iconv-lite/lib/index.d.ts
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/react-npm-16.13.1-56d408860d-13dcc9ba8a.zip/node_modules/react/cjs/react.production.min.js
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/react-npm-16.13.1-56d408860d-13dcc9ba8a.zip/node_modules/react/cjs/react.development.js
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/react-npm-16.13.1-56d408860d-13dcc9ba8a.zip/node_modules/react/index.js
+	/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/$$virtual/react-scripts-virtual-297d9e4f8d/0/cache/react-scripts-npm-3.4.3-a91e1c0256-63a9f736e5.zip/node_modules/react-scripts/lib/react-app.d.ts
+
+Info 83   [21:34:29.347] -----------------------------------------------
+Info 84   [21:34:29.348] Project '/dev/null/inferredProject1*' (Inferred)
+Info 84   [21:34:29.348] 	Files (24)
+
+Info 84   [21:34:29.348] -----------------------------------------------
+Info 84   [21:34:29.348] Project '/dev/null/autoImportProviderProject1*' (AutoImportProvider)
+Info 84   [21:34:29.348] 	Files (6)
+
+Info 84   [21:34:29.348] -----------------------------------------------
+Info 84   [21:34:29.348] Open files: 
+Info 84   [21:34:29.348] 	FileName: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx ProjectRootPath: /home/patarapolw/projects/make-pdf/packages/mdx
+Info 84   [21:34:29.348] 		Projects: /dev/null/inferredProject1*
+Perf 84   [21:34:29.348] 2::updateOpen: elapsed time (in milliseconds) 3079.0209
+Info 85   [21:34:29.348] response:
+    {"seq":0,"type":"response","command":"updateOpen","request_seq":2,"success":true,"performanceData":{"updateGraphDurationMs":2970},"body":true}
+Info 86   [21:34:29.349] event:
+    {"seq":0,"type":"event","event":"typingsInstallerPid","body":{"pid":65873}}
+Info 87   [21:34:29.349] Running: *ensureProjectForOpenFiles*
+Info 88   [21:34:29.349] Before ensureProjectForOpenFiles:
+Info 89   [21:34:29.349] Project '/dev/null/inferredProject1*' (Inferred)
+Info 89   [21:34:29.349] 	Files (24)
+
+Info 89   [21:34:29.349] -----------------------------------------------
+Info 89   [21:34:29.350] Project '/dev/null/autoImportProviderProject1*' (AutoImportProvider)
+Info 89   [21:34:29.350] 	Files (6)
+
+Info 89   [21:34:29.350] -----------------------------------------------
+Info 89   [21:34:29.350] Open files: 
+Info 89   [21:34:29.350] 	FileName: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx ProjectRootPath: /home/patarapolw/projects/make-pdf/packages/mdx
+Info 89   [21:34:29.350] 		Projects: /dev/null/inferredProject1*
+Info 89   [21:34:29.350] After ensureProjectForOpenFiles:
+Info 90   [21:34:29.350] Project '/dev/null/inferredProject1*' (Inferred)
+Info 90   [21:34:29.350] 	Files (24)
+
+Info 90   [21:34:29.350] -----------------------------------------------
+Info 90   [21:34:29.350] Project '/dev/null/autoImportProviderProject1*' (AutoImportProvider)
+Info 90   [21:34:29.350] 	Files (6)
+
+Info 90   [21:34:29.350] -----------------------------------------------
+Info 90   [21:34:29.350] Open files: 
+Info 90   [21:34:29.350] 	FileName: /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx ProjectRootPath: /home/patarapolw/projects/make-pdf/packages/mdx
+Info 90   [21:34:29.350] 		Projects: /dev/null/inferredProject1*
+Info 90   [21:34:29.350] got projects updated in background, updating diagnostics for /home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx
+Info 91   [21:34:29.350] event:
+    {"seq":0,"type":"event","event":"projectsUpdatedInBackground","body":{"openFiles":["/home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx"]}}
+Info 92   [21:34:29.352] Sending request:
+    {"projectName":"/dev/null/inferredProject1*","fileNames":["/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es5.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.dom.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.dom.iterable.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.scripthost.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.core.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.collection.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.generator.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.iterable.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.promise.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.proxy.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.reflect.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.symbol.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.array.include.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/.yarn/cache/typescript-patch-1c53dc8ca0-72db87d09f.zip/node_modules/typescript/lib/lib.es2016.full.d.ts","/home/patarapolw/projects/make-pdf/packages/mdx/src/pdf/index.jsx"],"compilerOptions":{"module":1,"target":3,"jsx":1,"sourceMap":true,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"resolveJsonModule":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typeAcquisition":{"enable":true,"include":[],"exclude":[]},"unresolvedImports":[],"projectRootPath":"/home/patarapolw/projects/make-pdf/packages/mdx","kind":"discover"}
