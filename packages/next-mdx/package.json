@@ -1,0 +1,27 @@
+{
+  "name": "next-mdx",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@mdx-js/loader": "1.6.18",
+    "@mdx-js/mdx": "1.6.18",
+    "@mdx-js/react": "^1.6.18",
+    "@next/mdx": "^9.5.3",
+    "@react-pdf/renderer": "^1.6.11",
+    "babel-runtime": "^6.26.0",
+    "iconv-lite": "^0.6.2",
+    "next": "^9.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "remark-emoji": "^2.1.0",
+    "remark-images": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
+}
