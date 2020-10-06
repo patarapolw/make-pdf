@@ -47,7 +47,7 @@ export const matter = {
   stringify<T> (content: string, data?: Record<string, T>): string {
     let matter = ''
 
-    if (data) {
+    if (data && Object.keys(data)) {
       try {
         matter = yaml.safeDump(data, {
           skipInvalid: true

@@ -10,7 +10,7 @@ const isDevServer = process.env.WEBPACK_DEV_SERVER
 const config = {
   mode: isDevServer ? 'development' : 'production',
   entry: {
-    'md-to-png': path.resolve('./src/md-to-png.ts'),
+    'md-to-img': path.resolve('./src/md-to-img.ts'),
     ...(isDevServer ? {
       main: path.resolve('./src/main.ts')
     } : {})

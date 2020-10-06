@@ -32,12 +32,9 @@
     "prepack": "cp ../../README.md README.md"
   },
   "dependencies": {
-    "ejs": "^3.1.5",
-    "global-jsdom": "^7.0.0",
+    "handlebars": "^4.7.6",
     "js-yaml": "^3.14.0",
-    "jsdom": "^16.4.0",
-    "pug": "^3.0.0",
-    "sass": "^1.26.11",
+    "puppeteer": "^5.3.1",
     "showdown": "^1.9.1",
     "yargs": "^16.0.3"
   },

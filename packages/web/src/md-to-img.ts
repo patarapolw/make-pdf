@@ -1,8 +1,8 @@
 import 'prismjs/themes/prism.css'
 
-import showdown from 'showdown'
 import domToImage from 'dom-to-image-even-more'
 import Prism from 'prismjs'
+import showdown from 'showdown'
 
 import { matter } from './matter'
 
@@ -10,7 +10,7 @@ declare global {
   interface Window {
     CodeMirror: typeof import('codemirror')
     Prism: typeof import('prismjs')
-    makePng: typeof makePng
+    makeImg: typeof makeImg
   }
 }
 
@@ -113,15 +113,20 @@ export async function parseHighlight (md: string, dom: HTMLDivElement): Promise<
   })
 }
 
-export async function makePng (md: string, dom: HTMLDivElement, opts: {
+export async function makeImg (md: string, dom: HTMLDivElement, opts: {
   width?: string
-  height?: string
+  height?: string,
+  showdown?: showdown.ShowdownOptions
 } = {}): Promise<string> {
   dom.style.width = opts.width || dom.style.width
   dom.style.height = opts.height || dom.style.height
+
+  if (opts.showdown) {
+    md = matter.stringify(md, opts.showdown)
+  }
 
   await parseHighlight(md, dom)
   return domToImage.toPng(dom)
 }
 
-window.makePng = makePng
+window.makeImg = makeImg

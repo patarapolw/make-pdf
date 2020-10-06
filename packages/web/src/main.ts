@@ -2,8 +2,8 @@ import './main.scss'
 
 import CodeMirror from 'codemirror'
 
+import { makeImg, parseHighlight } from './md-to-img'
 import { cmOptions } from './plugins/codemirror'
-import { makePng, parseHighlight } from './md-to-png'
 
 window.CodeMirror = CodeMirror
 
@@ -32,7 +32,7 @@ async function main () {
 
   async function reload () {
     const img = document.querySelector('.viewer > img') as HTMLImageElement
-    img.src = await makePng(
+    img.src = await makeImg(
       cm.getValue(),
       document.querySelector('[data-output]') as HTMLDivElement,
       {
