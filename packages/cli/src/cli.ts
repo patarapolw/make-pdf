@@ -34,6 +34,7 @@ async function main() {
       alias: 't',
       describe: 'Choose your latex dialect',
       type: 'string',
+      choices: ['latex', 'context', 'html5'],
       default: 'latex'
     })
     .option('force', {
