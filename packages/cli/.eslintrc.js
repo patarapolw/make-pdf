@@ -18,6 +18,7 @@ module.exports = {
     'prettier'
   ],
   rules: {
-    '@typescript-eslint/no-non-null-assertion': 0
+    '@typescript-eslint/no-non-null-assertion': 0,
+    'no-useless-constructor': 0
   }
 }

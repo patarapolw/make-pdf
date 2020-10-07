@@ -1,11 +1,11 @@
 #! /usr/bin/env node
 
-import { execSync } from 'child_process'
+import { spawnSync } from 'child_process'
 import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 
-import hbs from 'handlebars'
+import ejs from 'ejs'
 import puppeteer, { Browser } from 'puppeteer'
 import yargs from 'yargs'
 
@@ -74,52 +74,55 @@ async function main() {
     string,
     {
       data: string
-      width?: string
-      height?: string
+      width?: number
     }
   >()
 
-  hbs.registerHelper('include', function (this: typeof hbs.registerHelper, f) {
-    const { data, content } = matter.parse(
-      fs.readFileSync(path.join(ROOT, f), 'utf-8')
-    )
-    return hbs.compile(content)({
-      ...top.data,
-      ...data
+  const ejsRender = (md: string, d: Record<string, unknown>) =>
+    ejs.compile(md)({
+      ...d,
+      include: (f: string) => {
+        const { data, content } = matter.parse(
+          fs.readFileSync(path.join(ROOT, f), 'utf-8')
+        )
+        return ejsRender(content, { ...d, ...data })
+      },
+      md2png: (md: string, opts: { width?: number; delay?: number } = {}) => {
+        let h = crypto.randomBytes(8).toString('hex')
+        while (pngHash.has(h)) {
+          h = crypto.randomBytes(8).toString('hex')
+        }
+
+        pngHash.set(h, {
+          data: md,
+          width: opts.width
+        })
+
+        return new (class {
+          constructor(public url: string) {}
+
+          toString() {
+            return `![](${this.url})`
+          }
+        })(h)
+      }
     })
-  })
 
-  hbs.registerHelper('html', function (this: typeof hbs.registerHelper, opts) {
-    let h = crypto.randomBytes(8).toString('hex')
-    while (pngHash.has(h)) {
-      h = crypto.randomBytes(8).toString('hex')
-    }
+  let parsedMarkdown = ejsRender(top.content, top.data)
 
-    pngHash.set(h, {
-      data: opts.fn(this),
-      width: opts.hash.width,
-      height: opts.hash.height
-    })
-    return `![](${h})`
-  })
-
-  let parsedMarkdown = hbs.compile(top.content)(top.data)
+  const tmp = new Tmp(argv.infile)
 
   let browser: Browser | null = null
-
   if (pngHash.size) {
-    browser = await puppeteer.launch({
-      headless: true
-    })
+    browser = await puppeteer.launch()
   }
 
   if (browser) {
     for (const [h, content] of pngHash) {
       const page = await browser.newPage()
-      await page.goto(`data:text/html;charset=UTF-8,
-      <div class="el-${h}"></div>
-      `)
-
+      await page.goto(
+        `data:text/html;charset=UTF-8,<div class="el-${h}"></div>`
+      )
       await page.evaluate(
         fs.readFileSync(
           path.resolve(__dirname, '../public/md-to-img.js'),
@@ -127,65 +130,91 @@ async function main() {
         )
       )
 
-      parsedMarkdown = parsedMarkdown.replace(
-        h,
-        (await page.evaluate(
-          (content, h, opts) => {
-            const { makeImg } = (window as unknown) as {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              makeImg(c: string, dom: HTMLElement, opts: any): Promise<string>
-            }
-            return makeImg(
-              content,
-              document.querySelector(`div.el-${h}`) as HTMLElement,
-              opts
-            )
-          },
-          content.data,
-          h,
-          {
-            width: content.width || '',
-            height: content.height || '',
-            showdown: (top.data.showdown as showdown.ShowdownOptions) || {}
+      const imgb64 = await page.evaluate(
+        (content, h, opts) => {
+          const { makeImg } = (window as unknown) as {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            makeImg(c: string, dom: any, opts: any): Promise<string>
           }
-        )) as string
+          return makeImg(content, document.querySelector(`.el-${h}`), opts)
+        },
+        content.data,
+        h,
+        {
+          width: content.width || '',
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          showdown: (top.data.showdown as any) || {}
+        }
       )
 
-      await page.close()
+      const tmpfile = tmp.create('.png')
+      fs.writeFileSync(tmpfile, Buffer.from(imgb64.split(',')[1], 'base64'))
+
+      parsedMarkdown = parsedMarkdown.replace(h, tmpfile)
+      page.close()
     }
-
-    await browser.close()
   }
 
-  let tmpfile =
-    argv.infile.replace(/\.[A-Z]+$/i, '') +
-    '~' +
-    crypto.randomBytes(8).toString('hex') +
-    '.md'
-
-  while (fs.existsSync(tmpfile)) {
-    tmpfile =
-      argv.infile.replace(/\.[A-Z]+$/i, '') +
-      '~' +
-      crypto.randomBytes(8).toString('hex') +
-      '.md'
-  }
+  const tmpfile = tmp.create('.md')
   fs.writeFileSync(tmpfile, parsedMarkdown)
 
-  execSync(
-    `pandoc ${cmdQuote(path.relative(ROOT, tmpfile))} -t ${cmdQuote(
-      argv.latex
-    )} -o ${cmdQuote(path.relative(ROOT, argv.outfile as string))}`,
+  spawnSync(
+    'pandoc',
+    [
+      path.relative(ROOT, tmpfile),
+      '-t',
+      argv.latex,
+      '-o',
+      path.relative(ROOT, argv.outfile as string)
+    ],
     {
+      stdio: 'inherit',
       cwd: ROOT
     }
   )
 
-  fs.unlinkSync(tmpfile)
+  if (browser) {
+    browser.close()
+  }
+
+  tmp.cleanup()
 }
 
-function cmdQuote(s: string): string {
-  return `'${s.replace(/'/g, "''")}'`
+class Tmp {
+  tmplist: string[] = []
+
+  constructor(private infile: string) {}
+
+  create(ext: string) {
+    let tmpfile =
+      this.infile.replace(/\.[A-Z]+$/i, '') +
+      '~' +
+      crypto.randomBytes(8).toString('hex') +
+      ext
+
+    while (fs.existsSync(tmpfile)) {
+      tmpfile =
+        this.infile.replace(/\.[A-Z]+$/i, '') +
+        '~' +
+        crypto.randomBytes(8).toString('hex') +
+        ext
+    }
+
+    this.tmplist.push(tmpfile)
+
+    return tmpfile
+  }
+
+  async cleanup() {
+    return Promise.all(
+      this.tmplist.map(
+        async (f) =>
+          new Promise((resolve, reject) => {
+            fs.unlink(f, (err) => (err ? reject(err) : resolve()))
+          })
+      )
+    )
+  }
 }
 
 if (require.main === module) {

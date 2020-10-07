@@ -8,9 +8,10 @@ import { matter } from './matter'
 
 declare global {
   interface Window {
-    CodeMirror: typeof import('codemirror')
     Prism: typeof import('prismjs')
-    makeImg: typeof makeImg
+    parseHighlight: typeof parseHighlight
+    CodeMirror?: typeof import('codemirror')
+    makeImg?: typeof makeImg
   }
 }
 
@@ -113,13 +114,13 @@ export async function parseHighlight (md: string, dom: HTMLDivElement): Promise<
   })
 }
 
+window.parseHighlight = parseHighlight
+
 export async function makeImg (md: string, dom: HTMLDivElement, opts: {
   width?: string
-  height?: string,
   showdown?: showdown.ShowdownOptions
 } = {}): Promise<string> {
   dom.style.width = opts.width || dom.style.width
-  dom.style.height = opts.height || dom.style.height
 
   if (opts.showdown) {
     md = matter.stringify(md, opts.showdown)

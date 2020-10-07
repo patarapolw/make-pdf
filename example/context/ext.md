@@ -2,8 +2,8 @@
 
 Secret to centering anything is CSS. As I enable [scope-css](https://www.npmjs.com/package/scope-css) by default, you will need an extra selector.
 
-{{#html width='500px'}}
-```html
+\externalfigure[<%- md2png(`
+${'```'}html
 <style>
 :global {
   body {
@@ -16,5 +16,5 @@ Secret to centering anything is CSS. As I enable [scope-css](https://www.npmjs.c
   }
 }
 </style>
-```
-{{/html}}
+${'```'}
+`, { width: 800 }).url %>][width=\textwidth]

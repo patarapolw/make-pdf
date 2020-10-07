@@ -23,4 +23,4 @@ With features that markdown normally won't have.
 
 ## So, I can use LaTeX inside Markdown
 
-{{{ include "0.25.md" }}}
+<%- include('ext.md') %>
